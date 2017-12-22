@@ -6,12 +6,12 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 database = "amazon_crawler"
 host = "localhost"
 user = "postgres"
-password="123QQsuccess"
+password = "123QQsuccess"
 
 # Redis
 redis_host = "localhost"
 redis_port = 6379
-redis_db = 'db0'
+redis_db = 0
 
 # Request
 headers = {
@@ -23,19 +23,23 @@ headers = {
 allowed_params = ["node", "rh", "page"]
 
 # Proxies
+
 proxies = [
-    '168.228.152.14'
+    "13.78.125.167:8080",
+    "46.254.203.15:8080",
+    "192.116.142.153:8080",
+    "178.49.136.84:8080",
+    "89.22.175.43:8080",
+    "171.97.80.22:8080",
+    "200.117.239.89:8080"
 
     # check out https://proxybonanza.com/?aff_id=629
     # for a quick, easy-to-use proxy service
 ]
-proxy_user = "andreighervan"
-proxy_pass = "123QQsuccess"
-proxy_port = "1080"
 
 # Crawling Logic
 start_file = os.path.join(current_dir, "start-urls.txt")
-max_requests = 2 * 10**6  # two million
+max_requests = 2 * 10 ** 6  # two million
 max_details_per_listing = 9999
 
 # Threads
