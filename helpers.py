@@ -74,7 +74,7 @@ def log(msg):
     # global logging function
     if settings.log_stdout:
         try:
-            print "{}: {}".format(datetime.now(), msg)
+            print ("{}: {}".format(datetime.now(), msg))
         except UnicodeEncodeError:
             pass  # squash logging errors in case of non-ascii text
 
@@ -103,4 +103,4 @@ def dequeue_url():
 if __name__ == '__main__':
     # test proxy server IP masking
     r = make_request('https://api.ipify.org?format=json', return_soup=False)
-    print r.text
+    print (r.text)
