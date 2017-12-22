@@ -1,14 +1,14 @@
 import os
 import random
 from datetime import datetime
-from urllib.parse import urlparse
+from urlparse import urlparse
 
 import eventlet
 requests = eventlet.import_patched('requests.__init__')
 time = eventlet.import_patched('time')
 import redis
 
-from bs4 import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 from requests.exceptions import RequestException
 
 import settings
@@ -32,7 +32,7 @@ def make_request(url, return_soup=True):
 
     proxies = get_proxy()
     try:
-        r = requests.get(url, headers=settings.headers, proxies=proxies)
+        r = requests.get(url, headers=settings.headers, proxies={"https": proxies}, stream=True)
     except RequestException as e:
         log("WARNING: Request for {} failed, trying again.".format(url))
         return make_request(url)  # try request again, recursively
@@ -74,7 +74,7 @@ def log(msg):
     # global logging function
     if settings.log_stdout:
         try:
-            print ("{}: {}".format(datetime.now(), msg))
+            print "{}: {}".format(datetime.now(), msg)
         except UnicodeEncodeError:
             pass  # squash logging errors in case of non-ascii text
 
@@ -85,17 +85,10 @@ def get_proxy():
         return None
 
     proxy_ip = random.choice(settings.proxies)
-    proxy_url = "socks5://{user}:{passwd}@{ip}:{port}/".format(
-        user=settings.proxy_user,
-        passwd=settings.proxy_pass,
+    proxy_url = "{ip}".format(
         ip=proxy_ip,
-        port=settings.proxy_port,
-
     )
-    return {
-        "http": proxy_url,
-        "https": proxy_url
-    }
+    return proxy_url
 
 
 def enqueue_url(u):
@@ -110,4 +103,4 @@ def dequeue_url():
 if __name__ == '__main__':
     # test proxy server IP masking
     r = make_request('https://api.ipify.org?format=json', return_soup=False)
-    print (r.text)
+    print r.text
