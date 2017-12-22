@@ -27,9 +27,17 @@ def begin_crawl():
             count = 0
 
             # look for subcategory links on this page
+            '''
             subcategories = page.findAll("div", "bxc-grid__image")  # downward arrow graphics
             subcategories.extend(page.findAll("li", "sub-categories__list__item"))  # carousel hover menu
             sidebar = page.find("div", "browseBox")
+            '''
+
+            subcategories = page.find_all("div", {"class": "mm-column"})  # downward arrow graphics
+            subcategories.extend(page.find_all("ul", {"class": "mm-category-list"}))  # carousel hover menu
+            subcategories.extend(page.find("li"))
+            sidebar = page.find_all("div", {"class": "a-col-left"})
+
             if sidebar:
                 subcategories.extend(sidebar.findAll("li"))  # left sidebar
 
